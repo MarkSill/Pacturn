@@ -6,19 +6,21 @@ entities = nil
 ghostPositions = nil
 isSuper = false
 superTurns = 0
-currentTurn = "pacman"
+currentTurn = "starting"
 moves = 10
 score = 0
 sound = require("sounds")
+restartcount = 340
 
 function love.load()
 	math.randomseed(os.time())
 	isSuper = false
 	superTurns = 0
-	currentTurn = "pacman"
+	currentTurn = "starting"
 	moves = math.random(10)
 	score = 0
-	map = lf.load("maps/map.lua")()
+	m = #lf.getDirectoryItems("maps/")
+	map = lf.load("maps/map" .. m ..".lua")()
 	entities = {}
 	ghostPositions = {}
 	for y = 1, #map do
@@ -41,6 +43,7 @@ function love.load()
 		table.remove(ghostPositions, r)
 	end
 	sound.play("begin")
+	restartcount = 300
 end
 
 function love.update(dt)
@@ -48,7 +51,19 @@ function love.update(dt)
 	if currentTurn == "restarting" then
 		restartcount = restartcount - 1
 		if restartcount <= 0 then
+			currentTurn = "waiting"
+			restartcount = 340
+			sound.play("intermission")
+		end
+	elseif currentTurn == "waiting" then
+		restartcount = restartcount - 1
+		if restartcount <= 0 then
 			love.load()
+		end
+	elseif currentTurn == "starting" then
+		restartcount = restartcount - 1
+		if restartcount <= 0 then
+			setTurn("pacman")
 		end
 	end
 end
@@ -198,25 +213,22 @@ function love.keypressed(key)
 		if key == "w" or key == "up" then
 			move(pacman, 'y', -1)
 			moves = moves - 1
-			superTurns = superTurns - 1
 		elseif key == "s" or key == "down" then
 			move(pacman, 'y', 1)
 			moves = moves - 1
-			superTurns = superTurns - 1
 		elseif key == "a" or key == "left" then
 			move(pacman, 'x', -1)
 			moves = moves - 1
-			superTurns = superTurns - 1
 		elseif key == "d" or key == "right" then
 			move(pacman, 'x', 1)
 			moves = moves - 1
-			superTurns = superTurns - 1
 		end
 		if superTurns <= 0 then
 			isSuper = false
 		end
 		if moves <= 0 then
 			setTurn("ghost1")
+			superTurns = superTurns - 1
 		end
 	elseif string.sub(currentTurn, 1, 5) == "ghost" then
 		local n = string.sub(currentTurn, 6)
@@ -334,11 +346,33 @@ function move(entity, xORy, amnt)
 	end
 	entity.pos = {newx, newy}
 	for _, v in pairs(entities) do
-		if v.pos[1] == entity.pos[1] and v.pos[2] == entity.pos[2] and not isSuper then
+		if v.pos[1] == entity.pos[1] and v.pos[2] == entity.pos[2] then
 			if (v.type == "ghost" and entity.type == "pacman") or (v.type == "pacman" and entity.type == "ghost") then
-				sound.play("death")
-				currentTurn = "restarting"
-				restartcount = 120
+				if not isSuper then
+					sound.play("death")
+					currentTurn = "restarting"
+					restartcount = 120
+				else
+					sound.play("eatghost")
+					if v.type == "ghost" then
+						for y = 1, #map do
+							for x = 1, #map[y] do
+								if map[y][x] == 'g' then
+									v.pos = {x, y}
+								end
+							end
+						end
+					elseif entity.type == "ghost" then
+						for y = 1, #map do
+							for x = 1, #map[y] do
+								if map[y][x] == 'g' then
+									entity.pos = {x, y}
+								end
+							end
+						end
+						moves = 0
+					end
+				end
 			end
 		end
 	end
