@@ -73,73 +73,73 @@ function love.draw()
 	--draw the map itself
 	for y = 1, #map do
 		for x = 1, #map[y] do
-			if map[y][x] == '.' then
+			if map[y][x] == '.' then --dot
 				lg.setColor(255, 255, 0)
 				lg.circle("fill", x*20, y*20, 2, 100)
-			elseif map[y][x] == 's' then
+			elseif map[y][x] == 's' then --super dot
 				lg.setColor(255, 255, 0)
 				lg.circle("fill", x*20, y*20, 5, 100)
-			elseif map[y][x] == 'h' then
+			elseif map[y][x] == 'h' then --horizontal wall
 				lg.setColor(0, 0, 255)
 				lg.line(x*20-10, y*20-3, x*20+10, y*20-3)
 				lg.line(x*20-10, y*20+3, x*20+10, y*20+3)
-			elseif map[y][x] == 'v' then
+			elseif map[y][x] == 'v' then --vertical wall
 				lg.setColor(0, 0, 255)
 				lg.line(x*20-3, y*20-10, x*20-3, y*20+10)
 				lg.line(x*20+3, y*20-10, x*20+3, y*20+10)
-			elseif map[y][x] == '1' then
+			elseif map[y][x] == '1' then --bottom-right corner
 				lg.setColor(0, 0, 255)
 				lg.line(x*20+10, y*20-3, x*20-3, y*20+10)
 				lg.line(x*20+10, y*20+3, x*20+3, y*20+10)
-			elseif map[y][x] == '2' then
+			elseif map[y][x] == '2' then --bottom-left corner
 				lg.setColor(0, 0, 255)
 				lg.line(x*20-10, y*20-3, x*20+3, y*20+10)
 				lg.line(x*20-10, y*20+3, x*20-3, y*20+10)
-			elseif map[y][x] == '3' then
+			elseif map[y][x] == '3' then --top-right corner
 				lg.setColor(0, 0, 255)
 				lg.line(x*20+10, y*20+3, x*20-3, y*20-10)
 				lg.line(x*20+10, y*20-3, x*20+3, y*20-10)
-			elseif map[y][x] == '4' then
+			elseif map[y][x] == '4' then --top-left corner
 				lg.setColor(0, 0, 255)
 				lg.line(x*20-10, y*20+3, x*20+3, y*20-10)
 				lg.line(x*20-10, y*20-3, x*20-3, y*20-10)
-			elseif map[y][x] == '5' then
+			elseif map[y][x] == '5' then --T down
 				lg.setColor(0, 0, 255)
 				lg.line(x*20-10, y*20-3, x*20+10, y*20-3)
 				lg.line(x*20-10, y*20+3, x*20-3, y*20+10)
 				lg.line(x*20+10, y*20+3, x*20+3, y*20+10)
-			elseif map[y][x] == '6' then
+			elseif map[y][x] == '6' then --T up
 				lg.setColor(0, 0, 255)
 				lg.line(x*20-10, y*20+3, x*20+10, y*20+3)
 				lg.line(x*20-10, y*20-3, x*20-3, y*20-10)
 				lg.line(x*20+10, y*20-3, x*20+3, y*20-10)
-			elseif map[y][x] == '7' then
+			elseif map[y][x] == '7' then --T right
 				lg.setColor(0, 0, 255)
 				lg.line(x*20-3, y*20-10, x*20-3, y*20+10)
 				lg.line(x*20+10, y*20-3, x*20+3, y*20-10)
 				lg.line(x*20+10, y*20+3, x*20+3, y*20+10)
-			elseif map[y][x] == '8' then
+			elseif map[y][x] == '8' then --T left
 				lg.setColor(0, 0, 255)
 				lg.line(x*20+3, y*20-10, x*20+3, y*20+10)
 				lg.line(x*20-10, y*20-3, x*20-3, y*20-10)
 				lg.line(x*20-10, y*20+3, x*20-3, y*20+10)
-			elseif map[y][x] == 'r' then
+			elseif map[y][x] == 'r' then --right ending
 				lg.setColor(0, 0, 255)
 				lg.line(x*20-10, y*20-3, x*20+8, y*20)
 				lg.line(x*20-10, y*20+3, x*20+8, y*20)
-			elseif map[y][x] == 'l' then
+			elseif map[y][x] == 'l' then --left ending
 				lg.setColor(0, 0, 255)
 				lg.line(x*20+10, y*20-3, x*20-8, y*20)
 				lg.line(x*20+10, y*20+3, x*20-8, y*20)
-			elseif map[y][x] == 'u' then
+			elseif map[y][x] == 'u' then --up ending
 				lg.setColor(0, 0, 255)
 				lg.line(x*20-3, y*20+10, x*20, y*20-8)
 				lg.line(x*20+3, y*20+10, x*20, y*20-8)
-			elseif map[y][x] == 'd' then
+			elseif map[y][x] == 'd' then --down ending
 				lg.setColor(0, 0, 255)
 				lg.line(x*20-3, y*20-10, x*20, y*20+8)
 				lg.line(x*20+3, y*20-10, x*20, y*20+8)
-			elseif map[y][x] == '9' then
+			elseif map[y][x] == '9' then --horizontal ghost door
 				lg.setColor(255, 0, 0)
 				lg.line(x*20-12, y*20, x*20+12, y*20)
 			end
@@ -179,23 +179,25 @@ function love.draw()
 	end
 	--draw the ui
 	local str = ""
+	local s = "S"
 	if currentTurn == "pacman" then
 		lg.setColor(255, 255, 0)
-		str = "PACMAN"
+		str = "PAK"
 	elseif currentTurn == "ghost1" then
 		lg.setColor(255, 0, 0)
-		str = "BLINKY"
+		str = "STROBE"
 	elseif currentTurn == "ghost2" then
 		lg.setColor(255, 0, 128)
-		str = "SPEEDY"
+		str = "GONZALES"
+		s = ""
 	elseif currentTurn == "ghost3" then
 		lg.setColor(0, 255, 255)
-		str = "INKY"
+		str = "MARKER"
 	elseif currentTurn == "ghost4" then
 		lg.setColor(255, 200, 0)
-		str = "CLYDE"
+		str = "CLIVE"
 	end
-	lg.print(str .. "'S TURN!", 450, 50, math.rad(10))
+	lg.print(str .. "'" .. s .. " TURN!", 450, 50, math.rad(10))
 	lg.print(moves .. " MOVES REMAINING", 450, 65, math.rad(10))
 	lg.setColor(255, 255, 0)
 	lg.print("SCORE: " .. score .. " POINTS", 450, 80, math.rad(10))
@@ -213,16 +215,12 @@ function love.keypressed(key)
 		end
 		if key == "w" or key == "up" then
 			move(pacman, 'y', -1)
-			moves = moves - 1
 		elseif key == "s" or key == "down" then
 			move(pacman, 'y', 1)
-			moves = moves - 1
 		elseif key == "a" or key == "left" then
 			move(pacman, 'x', -1)
-			moves = moves - 1
 		elseif key == "d" or key == "right" then
 			move(pacman, 'x', 1)
-			moves = moves - 1
 		end
 		if superTurns <= 0 then
 			isSuper = false
@@ -241,16 +239,12 @@ function love.keypressed(key)
 		end
 		if key == "w" or key == "up" then
 			move(ghost, 'y', -1)
-			moves = moves - 1
 		elseif key == "s" or key == "down" then
 			move(ghost, 'y', 1)
-			moves = moves -1
 		elseif key == "a" or key == "left" then
 			move(ghost, 'x', -1)
-			moves = moves - 1
 		elseif key == "d" or key == "right" then
 			move(ghost, 'x', 1)
-			moves = moves - 1
 		end
 		if moves <= 0 then
 			if tonumber(n) < 4 then
@@ -345,6 +339,10 @@ function move(entity, xORy, amnt)
 			sound.play("chomp")
 		end
 	end
+	if newx == posx and newy == posy then
+		return false
+	end
+	moves = moves - 1
 	entity.pos = {newx, newy}
 	for _, v in pairs(entities) do
 		if v.pos[1] == entity.pos[1] and v.pos[2] == entity.pos[2] then
@@ -377,6 +375,7 @@ function move(entity, xORy, amnt)
 			end
 		end
 	end
+	return true
 end
 
 function setTurn(player)
