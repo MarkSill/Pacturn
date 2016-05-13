@@ -19,7 +19,7 @@ function love.load()
 	currentTurn = "starting"
 	moves = math.random(10)
 	score = 0
-	m = #lf.getDirectoryItems("maps/")
+	m = math.random(#lf.getDirectoryItems("maps/"))
 	map = lf.load("maps/map" .. m ..".lua")()
 	entities = {}
 	ghostPositions = {}
